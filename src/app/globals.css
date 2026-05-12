@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  background: #10131a;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100dvh;
+  background:
+    linear-gradient(180deg, rgba(173, 198, 255, 0.025), transparent 320px),
+    #10131a;
+  color: #e1e2ec;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: #4d8eff;
+  color: #001a42;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
+  }
+}
+
+@layer components {
+  .container-shell {
+    width: min(calc(100% - 40px), 1100px);
+    margin-inline: auto;
+  }
+
+  @media (min-width: 768px) {
+    .container-shell {
+      width: min(calc(100% - 128px), 1100px);
+    }
+  }
+
+  .section-shell {
+    @apply scroll-mt-24 border-b border-outline-variant/45 py-20 md:py-24;
+  }
+
+  .subtle-panel {
+    @apply border border-outline-variant bg-surface-low text-on-surface;
+  }
+
+  .focus-ring {
+    @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary;
+  }
+}
