@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { SectionTitle } from "@/components/SectionTitle";
 import { Code, Gamepad2, GraduationCap, Layers, Rocket } from "lucide-react";
 
@@ -60,6 +60,8 @@ function SmartphoneIcon(props: React.SVGProps<SVGSVGElement>) {
 }
 
 export function BuildTimeline() {
+  const prefersReduced = useReducedMotion();
+
   return (
     <section id="timeline" className="section-shell">
       <div className="container-shell">
@@ -92,7 +94,7 @@ export function BuildTimeline() {
                           ? "border-primary/50 bg-surface-container"
                           : "bg-surface-lowest"
                       }`}
-                      whileHover={{ scale: 1.01 }}
+                      whileHover={prefersReduced ? undefined : { scale: 1.01 }}
                       transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     >
                       <div className="flex items-center gap-3 mb-3">
@@ -104,8 +106,16 @@ export function BuildTimeline() {
                         {isLast ? (
                           <motion.span
                             className="h-1.5 w-1.5 rounded-full bg-primary"
-                            animate={{ opacity: [0.5, 1, 0.5] }}
-                            transition={{ duration: 2, repeat: Infinity }}
+                            animate={
+                              prefersReduced
+                                ? { opacity: 0.8 }
+                                : { opacity: [0.5, 1, 0.5] }
+                            }
+                            transition={
+                              prefersReduced
+                                ? { duration: 0.3 }
+                                : { duration: 2, repeat: Infinity }
+                            }
                           />
                         ) : null}
                       </div>
@@ -125,9 +135,10 @@ export function BuildTimeline() {
                           ? "border-primary bg-primary/15 text-primary"
                           : "border-outline-variant bg-surface-low text-on-surface-variant"
                       }`}
-                      whileInView={{ scale: [0.8, 1] }}
+                      initial={{ scale: 0.8 }}
+                      whileInView={{ scale: 1 }}
                       viewport={{ once: true }}
-                      transition={{ delay: i * 0.08 + 0.15 }}
+                      transition={{ delay: i * 0.08 + 0.15, type: "spring", stiffness: 250 }}
                     >
                       <Icon aria-hidden="true" className="h-4 w-4" />
                     </motion.div>

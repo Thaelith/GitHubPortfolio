@@ -6,7 +6,7 @@ type Props = { featured?: boolean };
 
 export function NineVisual({ featured }: Props) {
   const prefersReduced = useReducedMotion();
-  const maxW = featured ? "max-w-[520px]" : "max-w-[360px]";
+  const maxW = featured ? "max-w-[600px]" : "max-w-[360px]";
 
   return (
     <motion.div

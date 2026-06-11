@@ -6,7 +6,7 @@ type Props = { featured?: boolean };
 
 export function LinkRoomVisual({ featured }: Props) {
   const prefersReduced = useReducedMotion();
-  const maxW = featured ? "max-w-[520px]" : "max-w-[380px]";
+  const maxW = featured ? "max-w-[600px]" : "max-w-[380px]";
 
   return (
     <motion.div

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue, useSpring, useReducedMotion } from "framer-motion";
 import { useRef, type ComponentType, type MouseEvent } from "react";
 import Link from "next/link";
 import type { LucideProps } from "lucide-react";
@@ -30,6 +30,7 @@ export function MagneticButton({
   external,
   className = "",
 }: MagneticButtonProps) {
+  const prefersReduced = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -37,7 +38,7 @@ export function MagneticButton({
   const springY = useSpring(y, { stiffness: 180, damping: 15 });
 
   const handleMouseMove = (e: MouseEvent) => {
-    if (!ref.current) return;
+    if (prefersReduced || !ref.current) return;
     const rect = ref.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;

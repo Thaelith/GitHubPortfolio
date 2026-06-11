@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 type Props = { featured?: boolean };
 
 export function QueueForgeVisual({ featured }: Props) {
-  const maxW = featured ? "max-w-[540px]" : "max-w-[400px]";
+  const maxW = featured ? "max-w-[620px]" : "max-w-[400px]";
 
   return (
     <motion.div

@@ -6,18 +6,18 @@ type Props = { featured?: boolean };
 
 export function ArchLensVisual({ featured }: Props) {
   const prefersReduced = useReducedMotion();
-  const maxW = featured ? "max-w-[580px]" : "max-w-[480px]";
-  const canvasW = featured ? 480 : 392;
-  const canvasH = featured ? 210 : 192;
+  const maxW = featured ? "max-w-[660px]" : "max-w-[480px]";
+  const canvasW = featured ? 540 : 392;
+  const canvasH = featured ? 220 : 192;
 
   const nodes = [
     { id: "client", label: "Client", left: "3%", top: "10%", width: 58, height: 30 },
     { id: "api", label: "API", left: "28%", top: "6%", width: 42, height: 30, selected: true },
     { id: "auth", label: "Auth", left: "18%", top: "42%", width: 44, height: 30 },
-    { id: "db", label: "DB", left: "52%", top: "6%", width: 38, height: 30 },
-    { id: "queue", label: "Queue", left: "46%", top: "42%", width: 48, height: 30 },
-    { id: "worker", label: "Worker", left: "72%", top: "26%", width: 54, height: 30 },
-    { id: "cache", label: "Cache", left: "68%", top: "58%", width: 50, height: 30 },
+    { id: "db", label: "DB", left: "54%", top: "6%", width: 38, height: 30 },
+    { id: "queue", label: "Queue", left: "48%", top: "42%", width: 48, height: 30 },
+    { id: "worker", label: "Worker", left: "74%", top: "24%", width: 54, height: 30 },
+    { id: "cache", label: "Cache", left: "70%", top: "58%", width: 50, height: 30 },
   ];
 
   const edges = [

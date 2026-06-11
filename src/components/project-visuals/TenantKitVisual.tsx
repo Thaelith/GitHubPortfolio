@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 type Props = { featured?: boolean };
 
 export function TenantKitVisual({ featured }: Props) {
-  const maxW = featured ? "max-w-[520px]" : "max-w-[380px]";
+  const maxW = featured ? "max-w-[600px]" : "max-w-[380px]";
 
   return (
     <motion.div

@@ -6,18 +6,25 @@ type Props = { featured?: boolean };
 
 export function NetworkRoutingVisual({ featured }: Props) {
   const prefersReduced = useReducedMotion();
-  const maxW = featured ? "max-w-[580px]" : "max-w-[480px]";
-  const canvasW = featured ? 440 : 360;
+  const maxW = featured ? "max-w-[660px]" : "max-w-[480px]";
+  const canvasW = featured ? 480 : 360;
   const canvasH = featured ? 155 : 140;
 
-  const nodes = [
-    { id: "S", label: "S", cx: 18, cy: 38, r: 16 },
-    { id: "R1", label: "R1", cx: 40, cy: 24, r: 16 },
-    { id: "R2", label: "R2", cx: 18, cy: 72, r: 16 },
-    { id: "R3", label: "R3", cx: 40, cy: 72, r: 16 },
-    { id: "R4", label: "R4", cx: 70, cy: 24, r: 16 },
-    { id: "D", label: "D", cx: 70, cy: 72, r: 16 },
+  const nodePcts = [
+    { id: "S", label: "S", cxPct: 10, cyPct: 25 },
+    { id: "R1", label: "R1", cxPct: 36, cyPct: 15 },
+    { id: "R2", label: "R2", cxPct: 10, cyPct: 45 },
+    { id: "R3", label: "R3", cxPct: 36, cyPct: 45 },
+    { id: "R4", label: "R4", cxPct: 72, cyPct: 15 },
+    { id: "D", label: "D", cxPct: 72, cyPct: 45 },
   ];
+
+  const nodes = nodePcts.map((n) => ({
+    ...n,
+    cx: Math.round((n.cxPct / 100) * canvasW),
+    cy: Math.round((n.cyPct / 100) * canvasH),
+    r: 16,
+  }));
 
   const allEdges = [
     { from: "S", to: "R1", w: 3 },
@@ -38,33 +45,13 @@ export function NetworkRoutingVisual({ featured }: Props) {
       Math.abs(shortestPath.indexOf(e.from) - shortestPath.indexOf(e.to)) === 1
   );
 
+  const pathNodes = shortestPath.map((id) => nodes.find((n) => n.id === id)!);
+  const packetCx = pathNodes.map((n) => n.cx);
+  const packetCy = pathNodes.map((n) => n.cy);
+
   const chartPoints = featured
     ? "0,22 4,17 8,12 12,8 16,5 20,3 24,7 28,11 32,9 36,8 40,7 44,6 48,5"
     : "0,20 3,16 6,12 9,8 12,5 15,3 18,6 21,10 24,8 27,7 30,6 33,5 36,4.5";
-
-  const pktDot = (edge: { from: string; to: string }, ei: number) => {
-    const fromNode = nodes.find((n) => n.id === edge.from)!;
-    const toNode = nodes.find((n) => n.id === edge.to)!;
-    const midX = (fromNode.cx + toNode.cx) / 2;
-    const midY = (fromNode.cy + toNode.cy) / 2;
-    return (
-      <motion.circle
-        key={`pkt-${edge.from}-${edge.to}`}
-        cx={midX + 3} cy={midY} r={2}
-        fill="#adc6ff" fillOpacity="0.8"
-        animate={
-          prefersReduced
-            ? { opacity: 0.7 }
-            : { opacity: [0.2, 0.9, 0.2] }
-        }
-        transition={
-          prefersReduced
-            ? { duration: 0.3 }
-            : { duration: 1.8, repeat: Infinity, delay: ei * 0.4 }
-        }
-      />
-    );
-  };
 
   return (
     <motion.div
@@ -104,10 +91,10 @@ export function NetworkRoutingVisual({ featured }: Props) {
         >
           <svg className="absolute inset-0 h-full w-full" viewBox={`0 0 ${canvasW} ${canvasH}`}>
             <defs>
-              <marker id="arrow-net-n" markerWidth="5" markerHeight="4" refX="4.5" refY="2" orient="auto">
+              <marker id="arrow-net-r" markerWidth="5" markerHeight="4" refX="4.5" refY="2" orient="auto">
                 <polygon points="0,0 5,2 0,4" fill="#adc6ff" fillOpacity="0.6" />
               </marker>
-              <marker id="arrow-dim-n" markerWidth="5" markerHeight="4" refX="4.5" refY="2" orient="auto">
+              <marker id="arrow-dim-r" markerWidth="5" markerHeight="4" refX="4.5" refY="2" orient="auto">
                 <polygon points="0,0 5,2 0,4" fill="#424754" fillOpacity="0.5" />
               </marker>
             </defs>
@@ -135,7 +122,7 @@ export function NetworkRoutingVisual({ featured }: Props) {
                     strokeOpacity={isHighlighted ? 0.5 : 0.3}
                     strokeWidth={isHighlighted ? 1.6 : 1}
                     strokeDasharray={isHighlighted ? undefined : "3 2"}
-                    markerEnd={isHighlighted ? "url(#arrow-net-n)" : "url(#arrow-dim-n)"}
+                    markerEnd={isHighlighted ? "url(#arrow-net-r)" : "url(#arrow-dim-r)"}
                     initial={{ pathLength: 0 }}
                     whileInView={{ pathLength: 1 }}
                     viewport={{ once: true }}
@@ -156,7 +143,24 @@ export function NetworkRoutingVisual({ featured }: Props) {
               );
             })}
 
-            {highlightedEdges.map((edge, ei) => pktDot(edge, ei))}
+            <motion.circle
+              r={3}
+              fill="#adc6ff"
+              fillOpacity="0.85"
+              animate={
+                prefersReduced
+                  ? { cx: packetCx[2], cy: packetCy[2], opacity: 0.7 }
+                  : {
+                      cx: packetCx,
+                      cy: packetCy,
+                    }
+              }
+              transition={
+                prefersReduced
+                  ? { duration: 0.3 }
+                  : { duration: 3, repeat: Infinity, ease: "easeInOut" }
+              }
+            />
           </svg>
 
           {nodes.map((node, i) => {
@@ -206,7 +210,6 @@ export function NetworkRoutingVisual({ featured }: Props) {
               </motion.div>
             );
           })}
-
         </div>
 
         <div className="grid grid-cols-[1fr_auto] gap-3 px-4 py-3">
@@ -239,9 +242,9 @@ export function NetworkRoutingVisual({ featured }: Props) {
             </svg>
           </div>
           <div className="space-y-1 text-right">
-            <div className="font-mono text-[8px] text-primary/60">path locked</div>
+            <div className="font-mono text-[8px] text-primary/60">Dijkstra path</div>
             <div className="font-mono text-[8px] text-tertiary/60">cwnd active</div>
-            <div className="font-mono text-[8px] text-green-400/50">flow ok</div>
+            <div className="font-mono text-[8px] text-green-400/50">pkt flow on</div>
           </div>
         </div>
       </div>
