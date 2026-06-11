@@ -9,15 +9,34 @@
 
 html {
   scroll-behavior: smooth;
+  scrollbar-color: #4d8eff #10131a;
+  scrollbar-width: thin;
 }
 
 body {
   min-height: 100dvh;
-  background:
-    linear-gradient(180deg, rgba(173, 198, 255, 0.025), transparent 320px),
-    #10131a;
+  background: #10131a;
   color: #e1e2ec;
   overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #10131a;
+  border-left: 1px solid #424754;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4d8eff;
+  border-radius: 6px;
+  border: 2px solid #10131a;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #adc6ff;
 }
 
 ::selection {
@@ -53,7 +72,7 @@ body {
   }
 
   .section-shell {
-    @apply scroll-mt-24 border-b border-outline-variant/45 py-20 md:py-24;
+    @apply scroll-mt-24 border-b border-outline-variant/45 py-14 md:py-20;
   }
 
   .subtle-panel {
@@ -62,5 +81,11 @@ body {
 
   .focus-ring {
     @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
   }
 }

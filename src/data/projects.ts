@@ -6,6 +6,11 @@ export type Project = {
   githubUrl: string | null;
   demoUrl: string | null;
   featured: boolean;
+  accentColor?: string;
+  status?: "complete" | "in-progress" | "maintained";
+  visualType?: "mobile" | "game" | "diagram" | "desktop" | "backend" | "saas" | "network";
+  highlights?: string[];
+  category?: "mobile" | "game" | "tool" | "desktop" | "backend" | "saas" | "academic";
 };
 
 export const projects: Project[] = [
@@ -18,6 +23,10 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/Thaelith/EcoTracker",
     demoUrl: null,
     featured: true,
+    status: "in-progress",
+    visualType: "mobile",
+    category: "mobile",
+    highlights: ["Barcode scanning", "CO\u2082 impact estimation", "Firebase integration", "MVVM architecture"],
   },
   {
     title: "99%",
@@ -28,6 +37,10 @@ export const projects: Project[] = [
     githubUrl: null,
     demoUrl: "https://thaelith.itch.io/99",
     featured: true,
+    status: "complete",
+    visualType: "game",
+    category: "game",
+    highlights: ["Published on itch.io", "Desktop calibration horror", "Custom mechanics"],
   },
   {
     title: "ArchLens",
@@ -38,6 +51,10 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/Thaelith/ArchLens",
     demoUrl: null,
     featured: true,
+    status: "in-progress",
+    visualType: "diagram",
+    category: "tool",
+    highlights: ["Interactive diagrams", "System design visualization", "React Flow integration"],
   },
   {
     title: "LinkRoom-Desktop",
@@ -48,6 +65,10 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/Thaelith/LinkRoom-Desktop",
     demoUrl: null,
     featured: false,
+    status: "complete",
+    visualType: "desktop",
+    category: "desktop",
+    highlights: ["Tauri desktop app", "Voice & chat rooms", "Screen sharing"],
   },
   {
     title: "QueueForge",
@@ -58,6 +79,10 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/Thaelith/QueueForge",
     demoUrl: null,
     featured: false,
+    status: "complete",
+    visualType: "backend",
+    category: "backend",
+    highlights: ["Worker leasing", "Dead-letter queue", "Prometheus metrics", "Distributed jobs"],
   },
   {
     title: "TenantKit-Lite",
@@ -68,6 +93,10 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/Thaelith/TenantKit-Lite",
     demoUrl: null,
     featured: false,
+    status: "complete",
+    visualType: "saas",
+    category: "saas",
+    highlights: ["Multi-tenant isolation", "RBAC", "Audit logging", "SQLite local dev"],
   },
   {
     title: "CSE320-Congestion-Control-Routing",
@@ -78,5 +107,9 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/Thaelith/CSE320-Congestion-Control-Routing",
     demoUrl: null,
     featured: false,
+    status: "complete",
+    visualType: "network",
+    category: "academic",
+    highlights: ["TCP Reno simulation", "Dijkstra routing", "C implementation"],
   },
 ];
