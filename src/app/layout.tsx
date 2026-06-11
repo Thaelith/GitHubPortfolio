@@ -23,11 +23,11 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Efkan Ertaş | Computer Engineering Student",
   description:
-    "Minimal software engineering portfolio for Efkan Ertaş, focused on Android development, Kotlin, Java, and game development.",
+    "Interactive software engineering portfolio for Efkan Ertaş, focused on Android development, Kotlin, Java, game development, and practical software projects.",
   openGraph: {
     title: "Efkan Ertaş | Computer Engineering Student",
     description:
-      "Portfolio focused on Android development, Kotlin, Java, and game development.",
+      "Interactive software engineering portfolio focused on Android development, Kotlin, Java, game development, and practical software projects.",
     type: "website",
   },
 };

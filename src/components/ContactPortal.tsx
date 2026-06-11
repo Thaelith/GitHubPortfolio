@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Github, Linkedin, Mail, Send, ArrowRight } from "lucide-react";
 import { MagneticButton } from "@/components/MagneticButton";
 import { SectionTitle } from "@/components/SectionTitle";
@@ -12,6 +12,8 @@ const contactLinks = {
 };
 
 export function ContactPortal() {
+  const prefersReduced = useReducedMotion();
+
   return (
     <section id="contact" className="section-shell">
       <div className="container-shell">
@@ -20,16 +22,23 @@ export function ContactPortal() {
         <motion.div
           className="subtle-panel grid gap-8 rounded-lg p-6 md:grid-cols-[1fr_320px] md:items-start md:p-8"
           initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "0px 0px 80px 0px" }}
-          transition={{ duration: 0.5 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
         >
           <div>
             <div className="flex items-center gap-3 mb-5">
               <motion.div
                 className="flex h-10 w-10 items-center justify-center rounded-full border border-primary/40 bg-primary/10"
-                animate={{ scale: [1, 1.05, 1] }}
-                transition={{ duration: 3, repeat: Infinity }}
+                animate={
+                  prefersReduced
+                    ? { scale: 1 }
+                    : { scale: [1, 1.05, 1] }
+                }
+                transition={
+                  prefersReduced
+                    ? { duration: 0.3 }
+                    : { duration: 3, repeat: Infinity }
+                }
               >
                 <Send aria-hidden="true" className="h-4 w-4 text-primary" />
               </motion.div>

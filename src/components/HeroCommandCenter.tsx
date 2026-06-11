@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Github, Linkedin, Mail, Terminal } from "lucide-react";
 import { MagneticButton } from "@/components/MagneticButton";
 
@@ -15,6 +15,8 @@ const terminalLines = [
 ];
 
 function ProfileSnapshot() {
+  const prefersReduced = useReducedMotion();
+
   return (
     <motion.div
       className="subtle-panel rounded-lg p-5"
@@ -28,8 +30,16 @@ function ProfileSnapshot() {
         </p>
         <motion.span
           className="block h-2 w-2 rounded-full bg-primary"
-          animate={{ opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 2, repeat: Infinity }}
+          animate={
+            prefersReduced
+              ? { opacity: 0.8 }
+              : { opacity: [0.5, 1, 0.5] }
+          }
+          transition={
+            prefersReduced
+              ? { duration: 0.3 }
+              : { duration: 2, repeat: Infinity }
+          }
         />
       </div>
       <dl className="mt-5 space-y-4 text-sm">
